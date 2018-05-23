@@ -1,1 +1,1 @@
-# AndroidCollegeProject
+# CollegeProject

@@ -78,15 +78,32 @@ public class PostActivity extends AppCompatActivity{
             public void onClick(View v) {
 
                 // 폰 앨범에서 사진을 불러오도록 설정
+                // ACTION_GET_CONTENT 는 유저가 어떤 종류의 데이터를 선택했는지를 확인하고 그것을 리턴하고, ACTION_PICK 는 유저가 선택한 데이터의 URI 를 리턴한다.
+                // ACTION_GET_CONTENT 공식 문서 주소
+                // https://developer.android.com/reference/android/content/Intent#ACTION_GET_CONTENT
+                // < 원문 >
+                // Activity Action: Allow the user to select a particular kind of data and return it.
+                // This is different than ACTION_PICK in that here we just say what kind of data is desired,
+                // not a URI of existing data from which the user can pick
                 Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT);
-                galleryIntent.setType("image/*");
-                startActivityForResult(galleryIntent, GALLERRY_REQUEST);
 
+                // setType 메서드는 Intent 클래스의 public 메서드.
+                // 명시적인 MIME 데이터 타입을 설정하기 위해 사용.
+                // 데이터가 아니라, 오로지 타입만을 지정하는 인텐트를 만들기위해 사용됨.
+                galleryIntent.setType("image/*");
+
+                // startActivityForResult
+                // Activity 클래스의 public 메서드
+                // 작업이 완료되면 원하는 작업을 시작
+                // startActivityForResult 에 대한 공식 문서 주소
+                // https://developer.android.com/reference/android/app/Activity#startActivityForResult(android.content.Intent,%20int,%20android.os.Bundle)
+                // GALLERY_REQUEST 는 request code 로 유저가 어느 인텐트를 통해서 왔는지 토큰으로 확인하는 방식이다. 데이터 타입은 int
+                // startActivityForResult 의 하위 메서드로 onActivityResult 가 호출되면, 모든 인텐트를 불러오기 때문에 확인절차가 필요하다.
+                startActivityForResult(galleryIntent, GALLERRY_REQUEST);
             }
         });
 
         // 포스트 버튼 클릭시, 디비에 게시글 정보 저장하는 이벤트 발생
-
         btnPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
